@@ -34,20 +34,22 @@ const CricketField = ({
     const offsetX = (width - fieldW) / 2;
 
     // Compute uniform scale to fit logical field into the container
-    const scale = (containerWidth && containerHeight)
-        ? Math.min(containerWidth / width, containerHeight / height)
-        : 1;
+    const scale =
+        containerWidth && containerHeight
+            ? Math.min(containerWidth / width, containerHeight / height)
+            : 1;
     const stagePixelW = width * scale;
     const stagePixelH = height * scale;
     const currentScale = scale * zoomScale;
 
     // Canvas Events Hook
-    const {
-        handleDragMove,
-        handleTouchEnd,
-        handleTouchMove,
-        handleWheel
-    } = useFieldGestures({ panPos, setPanPos, setZoomScale, stageRef, zoomScale });
+    const { handleDragMove, handleTouchEnd, handleTouchMove, handleWheel } = useFieldGestures({
+        panPos,
+        setPanPos,
+        setZoomScale,
+        stageRef,
+        zoomScale,
+    });
 
     return (
         <Stage
@@ -94,7 +96,7 @@ const CricketField = ({
                 fieldH={fieldH}
                 panPos={panPos}
             />
-        </Stage >
+        </Stage>
     );
 };
 

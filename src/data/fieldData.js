@@ -1,16 +1,16 @@
 // Initial fielder positions (normalized 0–1 relative to field width/height)
 export const initialFielderPositions = [
-    [0.49, 0.347],   // WK
-    [0.47, 0.68],    // Bowler
-    [0.466, 0.333],  // Fielder 3
-    [0.25, 0.15],    // Fielder 4
-    [0.3, 0.41],     // Fielder 5
-    [0.35, 0.53],    // Fielder 6
-    [0.32, 0.65],    // Fielder 7
-    [0.6, 0.74],     // Fielder 8
-    [0.7, 0.6],      // Fielder 9
-    [0.71, 0.41],    // Fielder 10
-    [0.6, 0.07],     // Fielder 11
+    [0.49, 0.347], // WK
+    [0.47, 0.68], // Bowler
+    [0.466, 0.333], // Fielder 3
+    [0.25, 0.15], // Fielder 4
+    [0.3, 0.41], // Fielder 5
+    [0.35, 0.53], // Fielder 6
+    [0.32, 0.65], // Fielder 7
+    [0.6, 0.74], // Fielder 8
+    [0.7, 0.6], // Fielder 9
+    [0.71, 0.41], // Fielder 10
+    [0.6, 0.07], // Fielder 11
 ];
 
 // All cricket fielding positions (name and vector coordinates)
@@ -78,4 +78,3 @@ export const fieldPositions = [
     { name: 'deep\nsquare leg', vector: [0.944, 0.429] },
     { name: 'deep backward\nsquare leg', vector: [0.921, 0.33] },
 ];
-

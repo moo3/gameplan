@@ -9,7 +9,7 @@ const CoverageLayer = ({
     offsetX,
     players,
     showBoundaryCoverage,
-    showCatchCoverage
+    showCatchCoverage,
 }) => {
     const pitchY = 0.18;
     const batY = fieldH / 2 - fieldH * (pitchY / 2 - 0.01);
@@ -42,14 +42,8 @@ const CoverageLayer = ({
             <Layer visible={showBoundaryCoverage} clipFunc={clipFunc} x={offsetX}>
                 {boundaryCoverages.map((tri, i) =>
                     tri ? (
-                        <Line
-                            key={`bc-${i}`}
-                            opacity={0.25}
-                            fill="yellow"
-                            points={tri}
-                            closed
-                        />
-                    ) : null
+                        <Line key={`bc-${i}`} opacity={0.25} fill="yellow" points={tri} closed />
+                    ) : null,
                 )}
             </Layer>
             <Layer visible={showCatchCoverage} clipFunc={clipFunc} x={offsetX}>
@@ -58,9 +52,12 @@ const CoverageLayer = ({
                         <Ellipse
                             key={`cc-${i}`}
                             fillRadialGradientColorStops={[
-                                0, 'rgba(249, 168, 69, 0.85)',
-                                0.50, 'rgba(249, 168, 69, 0.75)',
-                                1, 'rgba(255, 140, 40, 0)',
+                                0,
+                                'rgba(249, 168, 69, 0.85)',
+                                0.5,
+                                'rgba(249, 168, 69, 0.75)',
+                                1,
+                                'rgba(255, 140, 40, 0)',
                             ]}
                             fillRadialGradientEndRadius={Math.max(ell.radiusX, ell.radiusY)}
                             fillRadialGradientStartPoint={{ x: 0, y: 0 }}
@@ -72,7 +69,7 @@ const CoverageLayer = ({
                             x={ell.x}
                             y={ell.y}
                         />
-                    ) : null
+                    ) : null,
                 )}
             </Layer>
         </>

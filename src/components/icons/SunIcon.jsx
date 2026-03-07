@@ -1,7 +1,16 @@
 import React from 'react';
 
-export const SunIcon = ({ className = "", height = 18, width = 18 }) => (
-    <svg className={className} stroke="currentColor" strokeLinecap="round" viewBox="0 0 24 24" height={height} strokeWidth="2" width={width} fill="none">
+export const SunIcon = ({ className = '', height = 18, width = 18 }) => (
+    <svg
+        className={className}
+        stroke="currentColor"
+        strokeLinecap="round"
+        viewBox="0 0 24 24"
+        height={height}
+        strokeWidth="2"
+        width={width}
+        fill="none"
+    >
         <circle cx="12" cy="12" r="5" />
         <line x1="12" x2="12" y1="1" y2="3" />
         <line x1="12" y1="21" x2="12" y2="23" />

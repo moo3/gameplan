@@ -34,7 +34,10 @@ export function computeCatchCoverage(fielderX, fielderY, batOriginX, batOriginY)
     const distToBatter = Math.sqrt(calculateSquaredDistance(batPosition, fielderPosition));
     if (distToBatter < 1) return null;
     const catchRadiusFactor = (distToBatter * 6.28 * distanceToCatchFactor(distToBatter)) / 360;
-    const angleToBatter = Math.atan2(fielderPosition[1] - batPosition[1], fielderPosition[0] - batPosition[0]);
+    const angleToBatter = Math.atan2(
+        fielderPosition[1] - batPosition[1],
+        fielderPosition[0] - batPosition[0],
+    );
 
     return {
         radiusX: catchRadiusFactor * 1.1,
@@ -133,5 +136,3 @@ export function rotatePoint(batPos, fieldPos, angle) {
         Math.cos(rad) * (fieldPos[1] - batPos[1]);
     return [x, y];
 }
-
-

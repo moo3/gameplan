@@ -82,11 +82,7 @@ const PlayerMarker = ({
             y={y}
         >
             {/* Invisible enlarged hit area for easier touch targeting */}
-            <Circle
-                fill="transparent"
-                hitStrokeWidth={0}
-                radius={25}
-            />
+            <Circle fill="transparent" hitStrokeWidth={0} radius={25} />
             {/* Highlight glow when player input is focused in sidebar */}
             {highlighted && (
                 <Circle

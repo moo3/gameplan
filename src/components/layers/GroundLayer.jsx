@@ -22,9 +22,9 @@ const GroundLayer = ({ fieldH, fieldW, isLeftHanded, offsetX }) => {
 
     // 30-yard circle (oval) dimensions
     // Semicircles centered on stumps joined by parallel straight lines
-    const thirtyYardScaleFactor = 0.90; // Control factor to reduce/enlarge the oval size (0.8 = 20% reduction)
+    const thirtyYardScaleFactor = 0.9; // Control factor to reduce/enlarge the oval size (0.8 = 20% reduction)
     const ovalRadius = ((fieldW * 0.47) / 2) * thirtyYardScaleFactor;
-    const ovalL = (fieldH * pitchY) * thirtyYardScaleFactor;
+    const ovalL = fieldH * pitchY * thirtyYardScaleFactor;
     const cx = fieldW / 2;
     const cy = fieldH / 2;
     const yTop = cy - ovalL / 2;
@@ -91,14 +91,44 @@ const GroundLayer = ({ fieldH, fieldW, isLeftHanded, offsetX }) => {
                 stroke="white"
             />
             {/* Top Wickets (3 dots) */}
-            <Circle y={fieldH / 2 - (fieldH * pitchY) / 2 + wicketYOffset} x={fieldW / 2 - wicketSpacing} radius={wicketRadius} fill="white" />
-            <Circle y={fieldH / 2 - (fieldH * pitchY) / 2 + wicketYOffset} radius={wicketRadius} x={fieldW / 2} fill="white" />
-            <Circle y={fieldH / 2 - (fieldH * pitchY) / 2 + wicketYOffset} x={fieldW / 2 + wicketSpacing} radius={wicketRadius} fill="white" />
+            <Circle
+                y={fieldH / 2 - (fieldH * pitchY) / 2 + wicketYOffset}
+                x={fieldW / 2 - wicketSpacing}
+                radius={wicketRadius}
+                fill="white"
+            />
+            <Circle
+                y={fieldH / 2 - (fieldH * pitchY) / 2 + wicketYOffset}
+                radius={wicketRadius}
+                x={fieldW / 2}
+                fill="white"
+            />
+            <Circle
+                y={fieldH / 2 - (fieldH * pitchY) / 2 + wicketYOffset}
+                x={fieldW / 2 + wicketSpacing}
+                radius={wicketRadius}
+                fill="white"
+            />
 
             {/* Bottom Wickets (3 dots) */}
-            <Circle y={fieldH / 2 + (fieldH * pitchY) / 2 - wicketYOffset} x={fieldW / 2 - wicketSpacing} radius={wicketRadius} fill="white" />
-            <Circle y={fieldH / 2 + (fieldH * pitchY) / 2 - wicketYOffset} radius={wicketRadius} x={fieldW / 2} fill="white" />
-            <Circle y={fieldH / 2 + (fieldH * pitchY) / 2 - wicketYOffset} x={fieldW / 2 + wicketSpacing} radius={wicketRadius} fill="white" />
+            <Circle
+                y={fieldH / 2 + (fieldH * pitchY) / 2 - wicketYOffset}
+                x={fieldW / 2 - wicketSpacing}
+                radius={wicketRadius}
+                fill="white"
+            />
+            <Circle
+                y={fieldH / 2 + (fieldH * pitchY) / 2 - wicketYOffset}
+                radius={wicketRadius}
+                x={fieldW / 2}
+                fill="white"
+            />
+            <Circle
+                y={fieldH / 2 + (fieldH * pitchY) / 2 - wicketYOffset}
+                x={fieldW / 2 + wicketSpacing}
+                radius={wicketRadius}
+                fill="white"
+            />
 
             {/* Bat */}
             <Group rotation={batRotation} x={batX} y={batY}>

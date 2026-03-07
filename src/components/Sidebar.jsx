@@ -13,14 +13,15 @@ const Sidebar = ({
     return (
         <>
             {/* Backdrop overlay — closes sidebar on click */}
-            <div
-                className={`sidebar-backdrop${isOpen ? ' visible' : ''}`}
-                onClick={onClose}
-            />
+            <div className={`sidebar-backdrop${isOpen ? ' visible' : ''}`} onClick={onClose} />
             <div className={`sidebar${isOpen ? ' open' : ''}`}>
                 <div className="sidebar-header">
                     <span className="sidebar-section-label">Player Names</span>
-                    <button className="sidebar-close-btn" onClick={onClose} aria-label="Close sidebar">
+                    <button
+                        className="sidebar-close-btn"
+                        onClick={onClose}
+                        aria-label="Close sidebar"
+                    >
                         <CloseIcon height={18} width={18} />
                     </button>
                 </div>
@@ -51,7 +52,6 @@ const Sidebar = ({
                         );
                     })}
                 </div>
-
             </div>
         </>
     );

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const BatterIcon = ({ className = "", height = 24, leftHanded = false, width = 24 }) => (
+export const BatterIcon = ({ className = '', height = 24, leftHanded = false, width = 24 }) => (
     <svg
         className={className}
         style={leftHanded ? { transform: 'scaleX(-1)' } : undefined}

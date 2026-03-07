@@ -15,7 +15,7 @@ const PlayersLayer = ({
     panPos,
     players,
     showNames,
-    showPositions
+    showPositions,
 }) => {
     // Drag bound that constrains to ellipse
     // dragBoundFunc receives absolute (pixel) coords; we must convert
