@@ -9,6 +9,7 @@ export * from './MoonIcon';
 export * from './NameTagIcon';
 export * from './PositionIcon';
 export * from './ResetZoomIcon';
+export * from './ShareIcon';
 export * from './SunIcon';
 export * from './ZoomInIcon';
 export * from './ZoomOutIcon';
