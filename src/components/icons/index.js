@@ -2,6 +2,8 @@ export * from './BatterIcon';
 export * from './BoundaryIcon';
 export * from './CameraIcon';
 export * from './CatchIcon';
+export * from './CheckIcon';
+export * from './ClipboardIcon';
 export * from './CloseIcon';
 export * from './HelpIcon';
 export * from './MenuIcon';
