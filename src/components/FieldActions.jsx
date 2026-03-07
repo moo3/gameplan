@@ -1,75 +1,62 @@
 import React from 'react';
 
-/**
- * Left-side action buttons: theme toggle, sidebar toggle, download image.
- * Positioned at top-left of the field container.
- */
-// --- SVG Icons ---
 import { CameraIcon, HelpIcon, MenuIcon, MoonIcon, ShareIcon, SunIcon } from './icons';
 
-// --- Component ---
-
+/**
+ * Left-side action buttons: theme toggle, sidebar toggle, download image, share, help.
+ * Positioned at top-left of the field container.
+ */
 const FieldActions = ({ onDownloadImage, onOpenHelp, onOpenSidebar, onShare, setTheme, theme }) => {
     const isDark = theme === 'dark';
-
-    const buttons = [
-        {
-            action: () => setTheme(isDark ? 'light' : 'dark'),
-            icon: isDark ? <SunIcon /> : <MoonIcon />,
-            key: 'theme',
-            label: isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode',
-        },
-        {
-            action: onOpenSidebar,
-            icon: <MenuIcon />,
-            key: 'sidebar',
-            label: 'Edit Names',
-        },
-        {
-            action: onDownloadImage,
-            icon: <CameraIcon />,
-            key: 'download',
-            label: 'Download Image',
-        },
-        {
-            action: onShare,
-            icon: <ShareIcon />,
-            key: 'share',
-            label: 'Share',
-        },
-        {
-            action: onOpenHelp,
-            icon: <HelpIcon />,
-            key: 'help',
-            label: 'Help / Info',
-        },
-    ];
 
     return (
         <div className="field-actions">
             <div className="field-actions-top-row">
                 <button
-                    key={buttons[0].key}
                     className="field-toolbar-btn"
-                    onClick={buttons[0].action}
-                    data-tooltip={buttons[0].label}
-                    aria-label={buttons[0].label}
+                    onClick={() => setTheme(isDark ? 'light' : 'dark')}
+                    data-tooltip={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+                    aria-label={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
                 >
-                    {buttons[0].icon}
+                    {isDark ? <SunIcon /> : <MoonIcon />}
                 </button>
             </div>
 
-            {buttons.slice(1).map((buttonItem) => (
-                <button
-                    key={buttonItem.key}
-                    className="field-toolbar-btn"
-                    onClick={buttonItem.action}
-                    data-tooltip={buttonItem.label}
-                    aria-label={buttonItem.label}
-                >
-                    {buttonItem.icon}
-                </button>
-            ))}
+            <button
+                className="field-toolbar-btn"
+                onClick={onOpenSidebar}
+                data-tooltip="Edit Names"
+                aria-label="Edit Names"
+            >
+                <MenuIcon />
+            </button>
+
+            <button
+                className="field-toolbar-btn"
+                onClick={onDownloadImage}
+                data-tooltip="Download Image"
+                aria-label="Download Image"
+            >
+                <CameraIcon />
+            </button>
+
+            <button
+                className="field-toolbar-btn"
+                onClick={onShare}
+                data-tooltip="Share"
+                aria-label="Share"
+            >
+                <ShareIcon />
+            </button>
+
+            <button
+                className="field-toolbar-btn"
+                onClick={onOpenHelp}
+                data-tooltip="Help / Info"
+                aria-label="Help / Info"
+            >
+                <HelpIcon />
+            </button>
         </div>
     );
 };
