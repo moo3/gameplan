@@ -623,6 +623,7 @@ body {
     .zoom-controls {
         bottom: 16px;
         left: 50%;
+        right: auto;
         transform: translateX(-50%);
         flex-direction: row;
         gap: 8px;
