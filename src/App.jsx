@@ -127,7 +127,10 @@ function App() {
                     onZoomOut={handleZoomOut}
                     onZoomIn={handleZoomIn}
                 />
-                <div className="vzfld-logo">VZFLD</div>
+                <div className="vzfld-logo">
+                    <span>VZFLD</span>
+                    <span className="app-version">v{__APP_VERSION__}</span>
+                </div>
                 <SharePopup url={shareUrl} onClose={closeShare} />
             </div>
             <Sidebar
