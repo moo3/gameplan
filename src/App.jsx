@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
+import { encodeField, parseFieldFromPath } from './utils/fieldCodec';
 import CricketField from './components/CricketField';
 import FieldActions from './components/FieldActions';
 import FieldToolbar from './components/FieldToolbar';
@@ -18,6 +19,7 @@ function App() {
   const fieldContainerRef = useRef(null);
   const [containerSize, setContainerSize] = useState({ height: 0, width: 0 });
   const [isHelpOpen, setIsHelpOpen] = useState(false);
+  const [initialFieldState] = useState(() => parseFieldFromPath());
 
   const [showNames, setShowNames] = useState(true);
   const [showPositions, setShowPositions] = useState(true);
@@ -35,7 +37,7 @@ function App() {
     playerNames,
     players,
     setFocusedPlayerIndex
-  } = usePlayers();
+  } = usePlayers(initialFieldState);
 
   const {
     handleResetZoom,
@@ -77,6 +79,31 @@ function App() {
     link.click();
   }, []);
 
+  const [shareUrl, setShareUrl] = useState('');
+  const [copied, setCopied] = useState(false);
+
+  const handleShare = useCallback(() => {
+    const playerStrings = players.map((p, index) => {
+      const defaultName = `Player${index + 1}`;
+      if (p.name === defaultName) {
+        return `${p.x.toFixed(1)},${p.y.toFixed(1)}`;
+      }
+      return `${p.x.toFixed(1)},${p.y.toFixed(1)},${p.name}`;
+    });
+    const delimitedString = `${isLeftHanded ? 1 : 0}|${playerStrings.join('|')}`;
+    const compressed = encodeField(delimitedString);
+    const url = `${window.location.origin}/${compressed}`;
+    setShareUrl(url);
+    setCopied(false);
+  }, [players, isLeftHanded]);
+
+  const handleCopyUrl = useCallback(() => {
+    navigator.clipboard.writeText(shareUrl).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  }, [shareUrl]);
+
   return (
     <div className="app-container">
       <div ref={fieldContainerRef} className="field-container">
@@ -84,6 +111,7 @@ function App() {
           onOpenSidebar={() => setSidebarOpen(true)}
           onOpenHelp={() => setIsHelpOpen(true)}
           onDownloadImage={handleDownloadImage}
+          onShare={handleShare}
           setTheme={setTheme}
           theme={theme}
         />
@@ -125,6 +153,21 @@ function App() {
           onZoomIn={handleZoomIn}
         />
         <div className="vzfld-logo">VZFLD</div>
+
+        {shareUrl && (
+          <div className="share-popup">
+            <button className="share-popup-close" onClick={() => setShareUrl('')}>✕</button>
+            <a className="share-popup-url" href={shareUrl} target="_blank" rel="noopener noreferrer">{shareUrl}</a>
+            <button className="share-popup-copy" onClick={handleCopyUrl} title={copied ? 'Copied!' : 'Copy to clipboard'}>
+              {copied ? (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="16" height="16"><polyline points="20 6 9 17 4 12" /></svg>
+              ) : (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="16" height="16"><rect x="9" y="9" width="13" height="13" rx="2" ry="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></svg>
+              )}
+            </button>
+          </div>
+        )}
+
       </div>
       <Sidebar
         onPlayerNameChange={handlePlayerNameChange}

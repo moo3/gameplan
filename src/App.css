@@ -249,6 +249,87 @@ body {
   opacity: 0.8;
 }
 
+/* ─── Share Popup ─── */
+.share-popup {
+  position: absolute;
+  top: 180px;
+  left: 56px;
+  width: 220px;
+  background: var(--bg-sidebar);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px;
+  z-index: 20;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.share-popup-close {
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 12px;
+  padding: 2px 4px;
+  border-radius: 4px;
+  line-height: 1;
+  transition: color 0.15s ease;
+}
+
+.share-popup-close:hover {
+  color: var(--text-primary);
+}
+
+.share-popup-url {
+  font-family: 'Inter', monospace;
+  font-size: 10px;
+  color: var(--accent);
+  word-break: break-all;
+  line-height: 1.4;
+  padding: 8px 32px 8px 8px;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  margin-top: 14px;
+  text-decoration: none;
+  display: block;
+  transition: color 0.15s ease;
+}
+
+.share-popup-url:hover {
+  color: var(--accent-hover);
+  text-decoration: underline;
+}
+
+.share-popup-copy {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--toolbar-bg);
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.2s ease;
+}
+
+.share-popup-copy:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--toolbar-bg-hover);
+}
+
 /* Shared Tooltip styles */
 .field-toolbar-btn::after,
 .zoom-btn::after {
