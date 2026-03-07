@@ -32,3 +32,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npx semantic-release
+
+      - name: Deploy to Sevalla
+        uses: sevalla-hosting/sevalla-deploy@v2.0.0
+        with:
+          action: deploy-static-site  # or 'deploy-app' depending on your Sevalla setup
+          sevalla-token: ${{ secrets.SEVALLA_TOKEN }}
+          static-site-id: ${{ secrets.SEVALLA_STATIC_SITE_ID }} # Get this from your Sevalla dashboard
+          branch: main
