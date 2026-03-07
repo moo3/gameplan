@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/moo3/vzfld/compare/v1.0.0...v1.1.0) (2026-03-07)
+
+
+### Features
+
+* **ui:** display current application version from package.json under logo ([27ee335](https://github.com/moo3/vzfld/commit/27ee335e39e5069a412b07f1bb59ca53672aa876))
+
 # 1.0.0 (2026-03-07)
 
 
