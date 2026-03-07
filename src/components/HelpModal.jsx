@@ -9,7 +9,7 @@ const HelpModal = ({ isOpen, onClose }) => {
         <div className="help-modal-overlay" onClick={onClose}>
             <div className="help-modal-content" onClick={(e) => e.stopPropagation()}>
                 <div className="help-modal-header">
-                    <h2>How to Use Cricketer Fielders</h2>
+                    <h2>How to Use Gameplan</h2>
                     <button className="help-modal-close" onClick={onClose} title="Close">
                         <CloseIcon height={28} width={28} />
                     </button>
