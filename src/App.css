@@ -251,9 +251,9 @@ body {
 /* ─── Share Popup ─── */
 .share-popup {
     position: absolute;
-    top: 140px;
+    top: 120px;
     left: 56px;
-    width: 220px;
+    width: 240px;
     background: var(--bg-sidebar);
     border: 1px solid var(--border);
     border-radius: 10px;
@@ -275,7 +275,6 @@ body {
     background: var(--bg-input);
     border: 1px solid var(--border);
     border-radius: 6px;
-    margin-top: 14px;
     text-decoration: none;
     display: block;
     transition: color 0.15s ease;
