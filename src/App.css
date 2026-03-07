@@ -611,12 +611,26 @@ body {
     .field-toolbar {
         top: 8px;
         right: 8px;
-        gap: 4px;
+        gap: 6px;
     }
 
-    .field-toolbar-btn {
-        width: 32px;
-        height: 32px;
+    .field-toolbar .field-toolbar-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+    }
+
+    .zoom-controls {
+        bottom: 16px;
+        left: 50%;
+        transform: translateX(-50%);
+        flex-direction: row;
+        gap: 8px;
+    }
+
+    .zoom-btn {
+        width: 36px;
+        height: 36px;
         border-radius: 8px;
     }
 
@@ -642,13 +656,17 @@ body {
 }
 
 @media (max-width: 480px) {
-    .field-toolbar-btn {
+
+    .field-toolbar .field-toolbar-btn,
+    .field-toolbar-btn,
+    .zoom-btn {
         width: 28px;
         height: 28px;
         border-radius: 6px;
     }
 
-    .field-toolbar-btn svg {
+    .field-toolbar-btn svg,
+    .zoom-btn svg {
         width: 16px;
         height: 16px;
     }
