@@ -45,7 +45,7 @@ function App() {
     setPanPos,
     setZoomScale,
     zoomScale
-  } = useZoomPan();
+  } = useZoomPan(stageRef);
 
   // Observe the field container size for responsive scaling
   useEffect(() => {
