@@ -27,6 +27,7 @@ const CricketField = ({
     stageRef,
     width,
     zoomScale = 1,
+    children,
 }) => {
     // The inner field boundary is a logical square within the full stage
     const fieldW = width * FIELD_WIDTH_RATIO;
@@ -52,51 +53,54 @@ const CricketField = ({
     });
 
     return (
-        <Stage
-            ref={stageRef}
-            className="field-stage"
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-            onDragMove={handleDragMove}
-            onWheel={handleWheel}
-            draggable={zoomScale > 1} // Only allow panning when zoomed in
-            scaleX={currentScale}
-            scaleY={currentScale}
-            height={stagePixelH}
-            width={stagePixelW}
-            x={panPos.x}
-            y={panPos.y}
-        >
-            <GroundLayer
-                isLeftHanded={isLeftHanded}
-                offsetX={offsetX}
-                fieldW={fieldW}
-                fieldH={fieldH}
-            />
+        <div style={{ position: 'relative', width: stagePixelW, height: stagePixelH }}>
+            <Stage
+                ref={stageRef}
+                className="field-stage"
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
+                onDragMove={handleDragMove}
+                onWheel={handleWheel}
+                draggable={zoomScale > 1} // Only allow panning when zoomed in
+                scaleX={currentScale}
+                scaleY={currentScale}
+                height={stagePixelH}
+                width={stagePixelW}
+                x={panPos.x}
+                y={panPos.y}
+            >
+                <GroundLayer
+                    isLeftHanded={isLeftHanded}
+                    offsetX={offsetX}
+                    fieldW={fieldW}
+                    fieldH={fieldH}
+                />
 
-            <CoverageLayer
-                showBoundaryCoverage={showBoundaryCoverage}
-                showCatchCoverage={showCatchCoverage}
-                players={players}
-                offsetX={offsetX}
-                fieldW={fieldW}
-                fieldH={fieldH}
-            />
+                <CoverageLayer
+                    showBoundaryCoverage={showBoundaryCoverage}
+                    showCatchCoverage={showCatchCoverage}
+                    players={players}
+                    offsetX={offsetX}
+                    fieldW={fieldW}
+                    fieldH={fieldH}
+                />
 
-            <PlayersLayer
-                onPlayerNameChange={onPlayerNameChange}
-                onPlayerDrag={onPlayerDrag}
-                focusedPlayerIndex={focusedPlayerIndex}
-                showPositions={showPositions}
-                currentScale={currentScale}
-                showNames={showNames}
-                players={players}
-                offsetX={offsetX}
-                fieldW={fieldW}
-                fieldH={fieldH}
-                panPos={panPos}
-            />
-        </Stage>
+                <PlayersLayer
+                    onPlayerNameChange={onPlayerNameChange}
+                    onPlayerDrag={onPlayerDrag}
+                    focusedPlayerIndex={focusedPlayerIndex}
+                    showPositions={showPositions}
+                    currentScale={currentScale}
+                    showNames={showNames}
+                    players={players}
+                    offsetX={offsetX}
+                    fieldW={fieldW}
+                    fieldH={fieldH}
+                    panPos={panPos}
+                />
+            </Stage>
+            {children}
+        </div>
     );
 };
 

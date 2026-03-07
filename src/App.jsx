@@ -109,7 +109,13 @@ function App() {
                     stageRef={stageRef}
                     players={players}
                     panPos={panPos}
-                />
+                >
+                    <ZoomControls
+                        onResetZoom={handleResetZoom}
+                        onZoomOut={handleZoomOut}
+                        onZoomIn={handleZoomIn}
+                    />
+                </CricketField>
                 <FieldToolbar
                     setShowBoundaryCoverage={setShowBoundaryCoverage}
                     showBoundaryCoverage={showBoundaryCoverage}
@@ -121,11 +127,6 @@ function App() {
                     setShowNames={setShowNames}
                     isLeftHanded={isLeftHanded}
                     showNames={showNames}
-                />
-                <ZoomControls
-                    onResetZoom={handleResetZoom}
-                    onZoomOut={handleZoomOut}
-                    onZoomIn={handleZoomIn}
                 />
                 <div className="gameplan-logo">
                     <span>GAMEPLAN</span>

@@ -608,6 +608,11 @@ body {
         gap: 4px;
     }
 
+    .field-container {
+        padding-bottom: 60px;
+        /* Reserve safe bottom space for zoom controls */
+    }
+
     .field-toolbar {
         top: 8px;
         right: 8px;
@@ -621,7 +626,8 @@ body {
     }
 
     .zoom-controls {
-        bottom: 16px;
+        bottom: -56px;
+        /* Placed exactly beneath the canvas bounding div */
         left: 50%;
         right: auto;
         transform: translateX(-50%);
