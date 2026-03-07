@@ -1,13 +1,15 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { CheckIcon, ClipboardIcon } from './icons';
 
 /**
  * Share popup that displays the current page URL with a copy button.
  * Shows a clipboard icon that switches to a checkmark on successful copy.
+ * Closes when clicking anywhere outside the popup.
  */
 const SharePopup = ({ url, onClose }) => {
     const [copied, setCopied] = useState(false);
+    const popupRef = useRef(null);
 
     const handleCopy = useCallback(() => {
         navigator.clipboard.writeText(url).then(() => {
@@ -16,13 +18,22 @@ const SharePopup = ({ url, onClose }) => {
         });
     }, [url]);
 
+    // Close on click outside
+    useEffect(() => {
+        if (!url) return;
+        const handleClickOutside = (e) => {
+            if (popupRef.current && !popupRef.current.contains(e.target)) {
+                onClose();
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, [url, onClose]);
+
     if (!url) return null;
 
     return (
-        <div className="share-popup">
-            <button className="share-popup-close" onClick={onClose}>
-                ✕
-            </button>
+        <div className="share-popup" ref={popupRef}>
             <a className="share-popup-url" href={url} target="_blank" rel="noopener noreferrer">
                 {url}
             </a>
