@@ -25,8 +25,8 @@ const FieldActions = ({ onDownloadImage, onOpenHelp, onOpenSidebar, onShare, set
             <button
                 className="field-toolbar-btn"
                 onClick={onOpenSidebar}
-                data-tooltip="Edit Names"
-                aria-label="Edit Names"
+                data-tooltip="Edit Player Names"
+                aria-label="Edit Player Names"
             >
                 <MenuIcon />
             </button>
