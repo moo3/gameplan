@@ -15,171 +15,234 @@ const FIELD_WIDTH = 950;
 const FIELD_HEIGHT = 800;
 
 function App() {
-  const stageRef = useRef(null);
-  const fieldContainerRef = useRef(null);
-  const [containerSize, setContainerSize] = useState({ height: 0, width: 0 });
-  const [isHelpOpen, setIsHelpOpen] = useState(false);
-  const [initialFieldState] = useState(() => parseFieldFromPath());
+    const stageRef = useRef(null);
+    const fieldContainerRef = useRef(null);
+    const [containerSize, setContainerSize] = useState({ height: 0, width: 0 });
+    const [isHelpOpen, setIsHelpOpen] = useState(false);
+    const [initialFieldState] = useState(() => parseFieldFromPath());
 
-  const [showNames, setShowNames] = useState(true);
-  const [showPositions, setShowPositions] = useState(true);
-  const [showBoundaryCoverage, setShowBoundaryCoverage] = useState(true);
-  const [showCatchCoverage, setShowCatchCoverage] = useState(false);
-  const [theme, setTheme] = useState('light');
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+    // When loading from URL: use decoded flags + hide names unless custom names exist
+    // When visiting directly: show names and positions by default
+    const hasUrlState = initialFieldState !== null;
+    const hasCustomNames = hasUrlState && Object.keys(initialFieldState.names).length > 0;
 
-  const {
-    focusedPlayerIndex,
-    handleLeftHandedToggle,
-    handlePlayerDrag,
-    handlePlayerNameChange,
-    isLeftHanded,
-    playerNames,
-    players,
-    setFocusedPlayerIndex
-  } = usePlayers(initialFieldState);
+    const [showNames, setShowNames] = useState(hasUrlState ? hasCustomNames : true);
+    const [showPositions, setShowPositions] = useState(
+        hasUrlState ? initialFieldState.flags.showPositions : true,
+    );
+    const [showBoundaryCoverage, setShowBoundaryCoverage] = useState(
+        hasUrlState ? initialFieldState.flags.showBoundaryCoverage : true,
+    );
+    const [showCatchCoverage, setShowCatchCoverage] = useState(
+        hasUrlState ? initialFieldState.flags.showCatchCoverage : false,
+    );
+    const [theme, setTheme] = useState('light');
+    const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const {
-    handleResetZoom,
-    handleZoomIn,
-    handleZoomOut,
-    panPos,
-    setPanPos,
-    setZoomScale,
-    zoomScale
-  } = useZoomPan(stageRef);
+    const {
+        focusedPlayerIndex,
+        handleLeftHandedToggle,
+        handlePlayerDrag,
+        handlePlayerNameChange,
+        isLeftHanded,
+        playerNames,
+        players,
+        setFocusedPlayerIndex,
+    } = usePlayers(initialFieldState);
 
-  // Observe the field container size for responsive scaling
-  useEffect(() => {
-    const el = fieldContainerRef.current;
-    if (!el) return;
-    const ro = new ResizeObserver((entries) => {
-      const { height, width } = entries[0].contentRect;
-      setContainerSize({ height, width });
-    });
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, []);
+    const {
+        handleResetZoom,
+        handleZoomIn,
+        handleZoomOut,
+        panPos,
+        setPanPos,
+        setZoomScale,
+        zoomScale,
+    } = useZoomPan(stageRef);
 
-  // Sync theme to <html> data attribute
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-  }, [theme]);
+    // Observe the field container size for responsive scaling
+    useEffect(() => {
+        const el = fieldContainerRef.current;
+        if (!el) return;
+        const ro = new ResizeObserver((entries) => {
+            const { height, width } = entries[0].contentRect;
+            setContainerSize({ height, width });
+        });
+        ro.observe(el);
+        return () => ro.disconnect();
+    }, []);
 
-  // Download image
-  const handleDownloadImage = useCallback(() => {
-    if (!stageRef.current) return;
-    const filename = `set-your-field-placement.png`;
+    // Sync theme to <html> data attribute
+    useEffect(() => {
+        document.documentElement.setAttribute('data-theme', theme);
+    }, [theme]);
 
-    const dataURL = stageRef.current.toDataURL({ pixelRatio: 2 });
-    const link = document.createElement('a');
-    link.download = filename;
-    link.href = dataURL;
-    document.body.appendChild(link);
-    link.click();
-  }, []);
+    // Download image
+    const handleDownloadImage = useCallback(() => {
+        if (!stageRef.current) return;
+        const filename = `set-your-field-placement.png`;
 
-  const [shareUrl, setShareUrl] = useState('');
-  const [copied, setCopied] = useState(false);
+        const dataURL = stageRef.current.toDataURL({ pixelRatio: 2 });
+        const link = document.createElement('a');
+        link.download = filename;
+        link.href = dataURL;
+        document.body.appendChild(link);
+        link.click();
+    }, []);
 
-  const handleShare = useCallback(() => {
-    const playerStrings = players.map((p, index) => {
-      const defaultName = `Player${index + 1}`;
-      if (p.name === defaultName) {
-        return `${p.x.toFixed(1)},${p.y.toFixed(1)}`;
-      }
-      return `${p.x.toFixed(1)},${p.y.toFixed(1)},${p.name}`;
-    });
-    const delimitedString = `${isLeftHanded ? 1 : 0}|${playerStrings.join('|')}`;
-    const compressed = encodeField(delimitedString);
-    const url = `${window.location.origin}/${compressed}`;
-    setShareUrl(url);
-    setCopied(false);
-  }, [players, isLeftHanded]);
+    const [shareUrl, setShareUrl] = useState('');
+    const [copied, setCopied] = useState(false);
 
-  const handleCopyUrl = useCallback(() => {
-    navigator.clipboard.writeText(shareUrl).then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    });
-  }, [shareUrl]);
+    const generateShareUrl = useCallback(() => {
+        const playerStrings = players.map((p, index) => {
+            const defaultName = `Player${index + 1}`;
+            if (p.name === defaultName) {
+                return `${p.x.toFixed(1)},${p.y.toFixed(1)}`;
+            }
+            return `${p.x.toFixed(1)},${p.y.toFixed(1)},${p.name}`;
+        });
+        const delimitedString = `${isLeftHanded ? 1 : 0}|${playerStrings.join('|')}`;
+        const compressed = encodeField(delimitedString, {
+            showPositions,
+            showBoundaryCoverage,
+            showCatchCoverage,
+        });
+        return `${window.location.origin}/${compressed}`;
+    }, [players, isLeftHanded, showPositions, showBoundaryCoverage, showCatchCoverage]);
 
-  return (
-    <div className="app-container">
-      <div ref={fieldContainerRef} className="field-container">
-        <FieldActions
-          onOpenSidebar={() => setSidebarOpen(true)}
-          onOpenHelp={() => setIsHelpOpen(true)}
-          onDownloadImage={handleDownloadImage}
-          onShare={handleShare}
-          setTheme={setTheme}
-          theme={theme}
-        />
-        <CricketField
-          onPlayerNameChange={(index, newName) => handlePlayerNameChange(index + 1, newName)}
-          onPlayerDrag={handlePlayerDrag}
-          showBoundaryCoverage={showBoundaryCoverage}
-          focusedPlayerIndex={focusedPlayerIndex}
-          containerHeight={containerSize.height}
-          showCatchCoverage={showCatchCoverage}
-          containerWidth={containerSize.width}
-          showPositions={showPositions}
-          isLeftHanded={isLeftHanded}
-          setZoomScale={setZoomScale}
-          height={FIELD_HEIGHT}
-          showNames={showNames}
-          zoomScale={zoomScale}
-          setPanPos={setPanPos}
-          width={FIELD_WIDTH}
-          stageRef={stageRef}
-          players={players}
-          panPos={panPos}
-        />
-        <FieldToolbar
-          setShowBoundaryCoverage={setShowBoundaryCoverage}
-          showBoundaryCoverage={showBoundaryCoverage}
-          setShowCatchCoverage={setShowCatchCoverage}
-          setIsLeftHanded={handleLeftHandedToggle}
-          showCatchCoverage={showCatchCoverage}
-          setShowPositions={setShowPositions}
-          showPositions={showPositions}
-          setShowNames={setShowNames}
-          isLeftHanded={isLeftHanded}
-          showNames={showNames}
-        />
-        <ZoomControls
-          onResetZoom={handleResetZoom}
-          onZoomOut={handleZoomOut}
-          onZoomIn={handleZoomIn}
-        />
-        <div className="vzfld-logo">VZFLD</div>
+    const handleShare = useCallback(() => {
+        setShareUrl(generateShareUrl());
+        setCopied(false);
+    }, [generateShareUrl]);
 
-        {shareUrl && (
-          <div className="share-popup">
-            <button className="share-popup-close" onClick={() => setShareUrl('')}>✕</button>
-            <a className="share-popup-url" href={shareUrl} target="_blank" rel="noopener noreferrer">{shareUrl}</a>
-            <button className="share-popup-copy" onClick={handleCopyUrl} title={copied ? 'Copied!' : 'Copy to clipboard'}>
-              {copied ? (
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="16" height="16"><polyline points="20 6 9 17 4 12" /></svg>
-              ) : (
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="16" height="16"><rect x="9" y="9" width="13" height="13" rx="2" ry="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></svg>
-              )}
-            </button>
-          </div>
-        )}
+    // Auto-update share URL when field state changes while popup is open
+    useEffect(() => {
+        if (shareUrl) {
+            setShareUrl(generateShareUrl());
+            setCopied(false);
+        }
+    }, [generateShareUrl]); // eslint-disable-line react-hooks/exhaustive-deps
 
-      </div>
-      <Sidebar
-        onPlayerNameChange={handlePlayerNameChange}
-        onClose={() => setSidebarOpen(false)}
-        onPlayerFocus={setFocusedPlayerIndex}
-        focusedPlayerIndex={focusedPlayerIndex}
-        playerNames={playerNames}
-        isOpen={sidebarOpen}
-      />
-      <HelpModal onClose={() => setIsHelpOpen(false)} isOpen={isHelpOpen} />
-    </div>
-  );
+    const handleCopyUrl = useCallback(() => {
+        navigator.clipboard.writeText(shareUrl).then(() => {
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+        });
+    }, [shareUrl]);
+
+    return (
+        <div className="app-container">
+            <div ref={fieldContainerRef} className="field-container">
+                <FieldActions
+                    onOpenSidebar={() => setSidebarOpen(true)}
+                    onOpenHelp={() => setIsHelpOpen(true)}
+                    onDownloadImage={handleDownloadImage}
+                    onShare={handleShare}
+                    setTheme={setTheme}
+                    theme={theme}
+                />
+                <CricketField
+                    onPlayerNameChange={(index, newName) =>
+                        handlePlayerNameChange(index + 1, newName)
+                    }
+                    onPlayerDrag={handlePlayerDrag}
+                    showBoundaryCoverage={showBoundaryCoverage}
+                    focusedPlayerIndex={focusedPlayerIndex}
+                    containerHeight={containerSize.height}
+                    showCatchCoverage={showCatchCoverage}
+                    containerWidth={containerSize.width}
+                    showPositions={showPositions}
+                    isLeftHanded={isLeftHanded}
+                    setZoomScale={setZoomScale}
+                    height={FIELD_HEIGHT}
+                    showNames={showNames}
+                    zoomScale={zoomScale}
+                    setPanPos={setPanPos}
+                    width={FIELD_WIDTH}
+                    stageRef={stageRef}
+                    players={players}
+                    panPos={panPos}
+                />
+                <FieldToolbar
+                    setShowBoundaryCoverage={setShowBoundaryCoverage}
+                    showBoundaryCoverage={showBoundaryCoverage}
+                    setShowCatchCoverage={setShowCatchCoverage}
+                    setIsLeftHanded={handleLeftHandedToggle}
+                    showCatchCoverage={showCatchCoverage}
+                    setShowPositions={setShowPositions}
+                    showPositions={showPositions}
+                    setShowNames={setShowNames}
+                    isLeftHanded={isLeftHanded}
+                    showNames={showNames}
+                />
+                <ZoomControls
+                    onResetZoom={handleResetZoom}
+                    onZoomOut={handleZoomOut}
+                    onZoomIn={handleZoomIn}
+                />
+                <div className="vzfld-logo">VZFLD</div>
+
+                {shareUrl && (
+                    <div className="share-popup">
+                        <button className="share-popup-close" onClick={() => setShareUrl('')}>
+                            ✕
+                        </button>
+                        <a
+                            className="share-popup-url"
+                            href={shareUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            {shareUrl}
+                        </a>
+                        <button
+                            className="share-popup-copy"
+                            onClick={handleCopyUrl}
+                            title={copied ? 'Copied!' : 'Copy to clipboard'}
+                        >
+                            {copied ? (
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    width="16"
+                                    height="16"
+                                >
+                                    <polyline points="20 6 9 17 4 12" />
+                                </svg>
+                            ) : (
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    width="16"
+                                    height="16"
+                                >
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                                </svg>
+                            )}
+                        </button>
+                    </div>
+                )}
+            </div>
+            <Sidebar
+                onPlayerNameChange={handlePlayerNameChange}
+                onClose={() => setSidebarOpen(false)}
+                onPlayerFocus={setFocusedPlayerIndex}
+                focusedPlayerIndex={focusedPlayerIndex}
+                playerNames={playerNames}
+                isOpen={sidebarOpen}
+            />
+            <HelpModal onClose={() => setIsHelpOpen(false)} isOpen={isHelpOpen} />
+        </div>
+    );
 }
 
 export default App;

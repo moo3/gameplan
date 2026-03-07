@@ -3,7 +3,7 @@ import { useCallback, useMemo, useState } from 'react';
 import { fieldPositions, initialFielderPositions } from '../data/fieldData';
 import { flipCoords, getPositionLabel } from '../utils/fieldUtils';
 
-const positionCoordinates = fieldPositions.map(p => p.vector);
+const positionCoordinates = fieldPositions.map((p) => p.vector);
 
 const FIELD_W = 800;
 const FIELD_HEIGHT = 800;
@@ -15,7 +15,13 @@ export function usePlayers(initialFieldState) {
     });
     const [players, setPlayers] = useState(() => {
         if (initialFieldState?.coords) {
-            return initializePlayersFromCoords(initialFieldState.coords, initialFieldState.isLeftHanded ? flipCoords(positionCoordinates) : positionCoordinates, initialFieldState.names);
+            return initializePlayersFromCoords(
+                initialFieldState.coords,
+                initialFieldState.isLeftHanded
+                    ? flipCoords(positionCoordinates)
+                    : positionCoordinates,
+                initialFieldState.names,
+            );
         }
         return initializePlayers(positionCoordinates);
     });
@@ -53,28 +59,35 @@ export function usePlayers(initialFieldState) {
                 const normX = newX / FIELD_W;
                 const normY = p.y / FIELD_HEIGHT;
                 const newLabel =
-                    p.posId === 'wk' || p.posId === 'bowler' ? '' : getPositionLabel(normX, normY, newCoords);
+                    p.posId === 'wk' || p.posId === 'bowler'
+                        ? ''
+                        : getPositionLabel(normX, normY, newCoords);
                 return { ...p, posLabel: newLabel, x: newX };
-            })
+            }),
         );
     }, []);
 
-    const handlePlayerDrag = useCallback((index, e) => {
-        const node = e.target;
-        const newX = node.x();
-        const newY = node.y();
+    const handlePlayerDrag = useCallback(
+        (index, e) => {
+            const node = e.target;
+            const newX = node.x();
+            const newY = node.y();
 
-        setPlayers((prev) =>
-            prev.map((p, i) => {
-                if (i !== index) return p;
-                const normX = newX / FIELD_W;
-                const normY = newY / FIELD_HEIGHT;
-                const newLabel =
-                    p.posId === 'wk' || p.posId === 'bowler' ? '' : getPositionLabel(normX, normY, posCoords);
-                return { ...p, posLabel: newLabel, x: newX, y: newY };
-            })
-        );
-    }, [posCoords]);
+            setPlayers((prev) =>
+                prev.map((p, i) => {
+                    if (i !== index) return p;
+                    const normX = newX / FIELD_W;
+                    const normY = newY / FIELD_HEIGHT;
+                    const newLabel =
+                        p.posId === 'wk' || p.posId === 'bowler'
+                            ? ''
+                            : getPositionLabel(normX, normY, posCoords);
+                    return { ...p, posLabel: newLabel, x: newX, y: newY };
+                }),
+            );
+        },
+        [posCoords],
+    );
 
     const handlePlayerNameChange = useCallback((index, value) => {
         setPlayerNames((prev) => {
@@ -90,7 +103,7 @@ export function usePlayers(initialFieldState) {
                         return { ...p, name: value || `Player${i + 1}` };
                     }
                     return p;
-                })
+                }),
             );
         }
     }, []);
@@ -105,7 +118,7 @@ export function usePlayers(initialFieldState) {
         isLeftHanded,
         playerNames,
         players,
-        setFocusedPlayerIndex
+        setFocusedPlayerIndex,
     };
 }
 
@@ -162,4 +175,3 @@ function initializePlayersFromCoords(coords, posCoords, names = {}) {
         };
     });
 }
-
