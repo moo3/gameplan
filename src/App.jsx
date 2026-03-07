@@ -124,6 +124,7 @@ function App() {
           onZoomOut={handleZoomOut}
           onZoomIn={handleZoomIn}
         />
+        <div className="vzfld-logo">VZFLD</div>
       </div>
       <Sidebar
         onPlayerNameChange={handlePlayerNameChange}

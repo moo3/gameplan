@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@300;400;500&display=swap');
 
 /* ─── Theme: Dark (lightened) ─── */
 [data-theme="dark"] {
@@ -226,6 +226,27 @@ body {
 
 .zoom-btn:active {
   transform: scale(0.95);
+}
+
+/* ─── VZFLD Logo ─── */
+.vzfld-logo {
+  position: absolute;
+  bottom: 24px;
+  left: 24px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 32px;
+  font-weight: 500;
+  letter-spacing: 4px;
+  color: var(--text-secondary);
+  opacity: 0.5;
+  user-select: none;
+  pointer-events: none;
+  z-index: 10;
+  transition: opacity 0.3s ease;
+}
+
+.field-container:hover .vzfld-logo {
+  opacity: 0.8;
 }
 
 /* Shared Tooltip styles */
