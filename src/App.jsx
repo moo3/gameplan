@@ -93,7 +93,8 @@ function App() {
     const [shareUrl, setShareUrl] = useState('');
     const [copied, setCopied] = useState(false);
 
-    const generateShareUrl = useCallback(() => {
+    // Keep the address bar URL in sync with the current field state
+    useEffect(() => {
         const playerStrings = players.map((p, index) => {
             const defaultName = `Player${index + 1}`;
             if (p.name === defaultName) {
@@ -107,21 +108,21 @@ function App() {
             showBoundaryCoverage,
             showCatchCoverage,
         });
-        return `${window.location.origin}/${compressed}`;
-    }, [players, isLeftHanded, showPositions, showBoundaryCoverage, showCatchCoverage]);
-
-    const handleShare = useCallback(() => {
-        setShareUrl(generateShareUrl());
-        setCopied(false);
-    }, [generateShareUrl]);
-
-    // Auto-update share URL when field state changes while popup is open
-    useEffect(() => {
+        const newPath = `/${compressed}`;
+        if (window.location.pathname !== newPath) {
+            window.history.replaceState(null, '', newPath);
+        }
+        // If share popup is open, update its URL too
         if (shareUrl) {
-            setShareUrl(generateShareUrl());
+            setShareUrl(`${window.location.origin}${newPath}`);
             setCopied(false);
         }
-    }, [generateShareUrl]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [players, isLeftHanded, showPositions, showBoundaryCoverage, showCatchCoverage]); // eslint-disable-line react-hooks/exhaustive-deps
+
+    const handleShare = useCallback(() => {
+        setShareUrl(window.location.href);
+        setCopied(false);
+    }, []);
 
     const handleCopyUrl = useCallback(() => {
         navigator.clipboard.writeText(shareUrl).then(() => {
