@@ -75,8 +75,8 @@ body {
 .field-container {
     flex: 1;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
+    align-items: stretch;
     position: relative;
     background: linear-gradient(135deg, var(--bg-field) 0%, var(--bg-field-end) 100%);
     border-radius: 12px;
@@ -84,7 +84,16 @@ body {
     min-width: 0;
 }
 
-.field-container canvas {
+.canvas-wrapper {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+}
+
+.canvas-wrapper canvas {
     border-radius: 12px;
     touch-action: none;
     /* let Konva handle all touch events */
@@ -260,7 +269,7 @@ body {
     margin-left: 2px;
 }
 
-.field-container:hover .gameplan-logo {
+.canvas-wrapper:hover .gameplan-logo {
     opacity: 0.8;
 }
 
@@ -608,6 +617,11 @@ body {
         gap: 4px;
     }
 
+    .field-container {
+        flex-direction: column;
+        justify-content: stretch;
+    }
+
     .field-toolbar {
         top: 8px;
         right: 8px;
@@ -621,12 +635,17 @@ body {
     }
 
     .zoom-controls {
-        bottom: 16px;
-        left: 50%;
+        position: relative;
+        bottom: auto;
+        left: auto;
         right: auto;
-        transform: translateX(-50%);
+        transform: none;
         flex-direction: row;
-        gap: 8px;
+        justify-content: center;
+        gap: 12px;
+        margin-top: 12px;
+        margin-bottom: 8px;
+        z-index: 20;
     }
 
     .zoom-btn {

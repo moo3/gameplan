@@ -79,59 +79,61 @@ function App() {
 
     return (
         <div className="app-container">
-            <div ref={containerRef} className="field-container">
-                <FieldActions
-                    onOpenSidebar={() => setSidebarOpen(true)}
-                    onOpenHelp={() => setIsHelpOpen(true)}
-                    onDownloadImage={handleDownloadImage}
-                    onShare={openShare}
-                    setTheme={setTheme}
-                    theme={theme}
-                />
-                <CricketField
-                    onPlayerNameChange={(index, newName) =>
-                        handlePlayerNameChange(index + 1, newName)
-                    }
-                    onPlayerDrag={handlePlayerDrag}
-                    showBoundaryCoverage={showBoundaryCoverage}
-                    focusedPlayerIndex={focusedPlayerIndex}
-                    containerHeight={containerSize.height}
-                    showCatchCoverage={showCatchCoverage}
-                    containerWidth={containerSize.width}
-                    showPositions={showPositions}
-                    isLeftHanded={isLeftHanded}
-                    setZoomScale={setZoomScale}
-                    height={FIELD_HEIGHT}
-                    showNames={showNames}
-                    zoomScale={zoomScale}
-                    setPanPos={setPanPos}
-                    width={FIELD_WIDTH}
-                    stageRef={stageRef}
-                    players={players}
-                    panPos={panPos}
-                />
-                <FieldToolbar
-                    setShowBoundaryCoverage={setShowBoundaryCoverage}
-                    showBoundaryCoverage={showBoundaryCoverage}
-                    setShowCatchCoverage={setShowCatchCoverage}
-                    setIsLeftHanded={handleLeftHandedToggle}
-                    showCatchCoverage={showCatchCoverage}
-                    setShowPositions={setShowPositions}
-                    showPositions={showPositions}
-                    setShowNames={setShowNames}
-                    isLeftHanded={isLeftHanded}
-                    showNames={showNames}
-                />
+            <div className="field-container">
+                <div ref={containerRef} className="canvas-wrapper">
+                    <FieldActions
+                        onOpenSidebar={() => setSidebarOpen(true)}
+                        onOpenHelp={() => setIsHelpOpen(true)}
+                        onDownloadImage={handleDownloadImage}
+                        onShare={openShare}
+                        setTheme={setTheme}
+                        theme={theme}
+                    />
+                    <CricketField
+                        onPlayerNameChange={(index, newName) =>
+                            handlePlayerNameChange(index + 1, newName)
+                        }
+                        onPlayerDrag={handlePlayerDrag}
+                        showBoundaryCoverage={showBoundaryCoverage}
+                        focusedPlayerIndex={focusedPlayerIndex}
+                        containerHeight={containerSize.height}
+                        showCatchCoverage={showCatchCoverage}
+                        containerWidth={containerSize.width}
+                        showPositions={showPositions}
+                        isLeftHanded={isLeftHanded}
+                        setZoomScale={setZoomScale}
+                        height={FIELD_HEIGHT}
+                        showNames={showNames}
+                        zoomScale={zoomScale}
+                        setPanPos={setPanPos}
+                        width={FIELD_WIDTH}
+                        stageRef={stageRef}
+                        players={players}
+                        panPos={panPos}
+                    />
+                    <FieldToolbar
+                        setShowBoundaryCoverage={setShowBoundaryCoverage}
+                        showBoundaryCoverage={showBoundaryCoverage}
+                        setShowCatchCoverage={setShowCatchCoverage}
+                        setIsLeftHanded={handleLeftHandedToggle}
+                        showCatchCoverage={showCatchCoverage}
+                        setShowPositions={setShowPositions}
+                        showPositions={showPositions}
+                        setShowNames={setShowNames}
+                        isLeftHanded={isLeftHanded}
+                        showNames={showNames}
+                    />
+                    <div className="gameplan-logo">
+                        <span>GAMEPLAN</span>
+                        <span className="app-version">v{__APP_VERSION__}</span>
+                    </div>
+                    <SharePopup url={shareUrl} onClose={closeShare} />
+                </div>
                 <ZoomControls
                     onResetZoom={handleResetZoom}
                     onZoomOut={handleZoomOut}
                     onZoomIn={handleZoomIn}
                 />
-                <div className="gameplan-logo">
-                    <span>GAMEPLAN</span>
-                    <span className="app-version">v{__APP_VERSION__}</span>
-                </div>
-                <SharePopup url={shareUrl} onClose={closeShare} />
             </div>
             <Sidebar
                 onPlayerNameChange={handlePlayerNameChange}
