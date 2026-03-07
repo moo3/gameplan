@@ -84,6 +84,11 @@ body {
     min-width: 0;
 }
 
+/* Desktop: wrapper is static so zoom-controls fall through to .field-container */
+.cricket-field-wrapper {
+    position: static;
+}
+
 .field-container canvas {
     border-radius: 12px;
     touch-action: none;
@@ -621,12 +626,21 @@ body {
     }
 
     .zoom-controls {
-        bottom: 12px;
+        bottom: -56px;
         left: 50%;
         right: auto;
         transform: translateX(-50%);
         flex-direction: row;
         gap: 8px;
+    }
+
+    /* Mobile: wrapper becomes positioning parent so zoom sticks to canvas */
+    .cricket-field-wrapper {
+        position: relative;
+    }
+
+    .field-container {
+        padding-bottom: 60px;
     }
 
     .zoom-btn {

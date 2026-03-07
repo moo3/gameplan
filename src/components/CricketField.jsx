@@ -53,7 +53,7 @@ const CricketField = ({
     });
 
     return (
-        <div style={{ position: 'relative', width: stagePixelW, height: stagePixelH }}>
+        <div className="cricket-field-wrapper" style={{ width: stagePixelW, height: stagePixelH }}>
             <Stage
                 ref={stageRef}
                 className="field-stage"
