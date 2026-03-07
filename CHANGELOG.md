@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/moo3/gameplan/compare/v1.1.0...v1.1.1) (2026-03-07)
+
+
+### Bug Fixes
+
+* use timestamped filename for downloaded placements (gameplan-DDMMM-HHMM.png) ([b9e93e9](https://github.com/moo3/gameplan/commit/b9e93e9a07ab8a5eaa5b88276b4eb026e7e36d5f))
+
 # [1.1.0](https://github.com/moo3/vzfld/compare/v1.0.0...v1.1.0) (2026-03-07)
 
 
