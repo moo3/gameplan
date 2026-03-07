@@ -127,8 +127,8 @@ function App() {
                     onZoomOut={handleZoomOut}
                     onZoomIn={handleZoomIn}
                 />
-                <div className="vzfld-logo">
-                    <span>VZFLD</span>
+                <div className="gameplan-logo">
+                    <span>GAMEPLAN</span>
                     <span className="app-version">v{__APP_VERSION__}</span>
                 </div>
                 <SharePopup url={shareUrl} onClose={closeShare} />
