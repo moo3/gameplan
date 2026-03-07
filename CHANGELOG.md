@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/moo3/gameplan/compare/v1.1.2...v1.1.3) (2026-03-07)
+
+
+### Bug Fixes
+
+* add GitHub badge link next to version in logo area ([663d4e1](https://github.com/moo3/gameplan/commit/663d4e15468638fd268c7eeac959443234a93519))
+
 ## [1.1.2](https://github.com/moo3/gameplan/compare/v1.1.1...v1.1.2) (2026-03-07)
 
 
