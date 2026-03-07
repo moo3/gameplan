@@ -1,6 +1,20 @@
 import React from 'react';
 
-import { CloseIcon } from './icons';
+import {
+    BatterIcon,
+    BoundaryIcon,
+    CameraIcon,
+    CatchIcon,
+    CloseIcon,
+    MenuIcon,
+    MoonIcon,
+    NameTagIcon,
+    PositionIcon,
+    ResetZoomIcon,
+    ShareIcon,
+    ZoomInIcon,
+    ZoomOutIcon,
+} from './icons';
 
 const HelpModal = ({ isOpen, onClose }) => {
     if (!isOpen) return null;
@@ -16,63 +30,83 @@ const HelpModal = ({ isOpen, onClose }) => {
                 </div>
 
                 <div className="help-modal-body">
+                    {/* ── Fielders ── */}
                     <div className="help-section">
-                        <h3>Sharing Your Field</h3>
+                        <h3>Fielders</h3>
                         <p>
-                            The URL in your address bar always reflects the current field setup —
-                            player positions, custom names, and toggle settings. You can copy the
-                            page URL at any time and share it with anyone; opening the link will
-                            recreate the exact same field placement.
+                            <strong>Drag</strong> any player marker to reposition. Position labels
+                            update automatically using standard cricket field coordinates.
+                        </p>
+                        <p>
+                            <strong>Double-click</strong> a marker to rename it directly on the field.
                         </p>
                     </div>
 
+                    {/* ── Left Toolbar ── */}
                     <div className="help-section">
-                        <h3>Moving Fielders</h3>
-                        <p>
-                            Click and drag any of the round player markers on the grass. Their
-                            position labels will automatically update based on standard cricket
-                            coordinates (e.g., dragging a player to the square leg boundary will
-                            auto-label them &quot;deep square leg&quot;).
-                        </p>
+                        <h3>Left Toolbar</h3>
+                        <div className="help-icon-list">
+                            <div className="help-icon-row">
+                                <span className="help-icon"><MoonIcon /></span>
+                                <span>Toggle dark / light mode</span>
+                            </div>
+                            <div className="help-icon-row">
+                                <span className="help-icon"><MenuIcon /></span>
+                                <span>Open sidebar to edit all player names</span>
+                            </div>
+                            <div className="help-icon-row">
+                                <span className="help-icon"><CameraIcon /></span>
+                                <span>Download field as a high-res PNG image</span>
+                            </div>
+                            <div className="help-icon-row">
+                                <span className="help-icon"><ShareIcon /></span>
+                                <span>Copy a shareable URL that recreates your exact field setup</span>
+                            </div>
+                        </div>
                     </div>
 
+                    {/* ── Right Toolbar ── */}
+                    <div className="help-section">
+                        <h3>Right Toolbar</h3>
+                        <div className="help-icon-list">
+                            <div className="help-icon-row">
+                                <span className="help-icon"><NameTagIcon /></span>
+                                <span>Show / hide player names</span>
+                            </div>
+                            <div className="help-icon-row">
+                                <span className="help-icon"><PositionIcon /></span>
+                                <span>Show / hide position labels</span>
+                            </div>
+                            <div className="help-icon-row">
+                                <span className="help-icon"><BatterIcon /></span>
+                                <span>Switch between right-handed and left-handed batter (mirrors the field)</span>
+                            </div>
+                            <div className="help-icon-row">
+                                <span className="help-icon"><BoundaryIcon /></span>
+                                <span>Toggle boundary coverage zones</span>
+                            </div>
+                            <div className="help-icon-row">
+                                <span className="help-icon"><CatchIcon /></span>
+                                <span>Toggle catch coverage zones</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* ── Zoom & Pan ── */}
                     <div className="help-section">
                         <h3>Zoom &amp; Pan</h3>
-                        <p>
-                            Use the <strong>+ / - buttons</strong> in the bottom right, your mouse
-                            scroll wheel, or pinch-to-zoom on touch screens to zoom in. Once zoomed
-                            in, click and drag anywhere on the empty grass to pan around the field.
-                        </p>
-                    </div>
-
-                    <div className="help-section">
-                        <h3>Renaming Players</h3>
-                        <p>
-                            <strong>Double-click</strong> any player marker on the canvas to edit
-                            their name directly on the field. You can also edit player names in bulk
-                            using the Sidebar (menu icon in the top left).
-                        </p>
-                    </div>
-
-                    <div className="help-section">
-                        <h3>Using Presets</h3>
-                        <p>
-                            The top-left toolbar contains a <strong>Presets</strong> dropdown.
-                            Selecting a preset (like &quot;Attacking 1&quot; or &quot;Slower
-                            Bowler&quot;) will instantly snap the 9 outfielders to their designated
-                            strategic coordinates.
-                        </p>
-                    </div>
-
-                    <div className="help-section">
-                        <h3>Toggles &amp; Actions</h3>
-                        <p>
-                            Use the buttons in the top-right toolbar to toggle visibility of player
-                            names, position labels, boundary coverage, catch zones, and switch
-                            between Right-Handed / Left-Handed batter orientations (which
-                            automatically mirrors the field).
-                        </p>
-                        <p>Use the top-left toolbar to download your field as a high-res image.</p>
+                        <div className="help-icon-list">
+                            <div className="help-icon-row">
+                                <span className="help-icon"><ZoomInIcon /></span>
+                                <span className="help-icon"><ZoomOutIcon /></span>
+                                <span>Zoom in / out (or use scroll wheel / pinch)</span>
+                            </div>
+                            <div className="help-icon-row">
+                                <span className="help-icon"><ResetZoomIcon /></span>
+                                <span>Reset zoom to default view</span>
+                            </div>
+                        </div>
+                        <p>When zoomed in, drag the empty grass to pan around.</p>
                     </div>
                 </div>
             </div>

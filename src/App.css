@@ -792,3 +792,31 @@ body {
 .help-section p:last-child {
     margin-bottom: 0;
 }
+
+.help-icon-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.help-icon-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--text-secondary);
+}
+
+.help-icon {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--toolbar-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--accent);
+}
