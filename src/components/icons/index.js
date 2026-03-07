@@ -5,6 +5,7 @@ export * from './CatchIcon';
 export * from './CheckIcon';
 export * from './ClipboardIcon';
 export * from './CloseIcon';
+export * from './GithubIcon';
 export * from './HelpIcon';
 export * from './MenuIcon';
 export * from './MoonIcon';

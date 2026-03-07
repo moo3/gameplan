@@ -265,6 +265,20 @@ body {
     margin-left: 2px;
 }
 
+.github-badge {
+    pointer-events: auto;
+    color: inherit;
+    opacity: 0.6;
+    margin-left: 6px;
+    vertical-align: middle;
+    transition: opacity 0.2s ease;
+}
+
+.github-badge:hover {
+    opacity: 1;
+    color: var(--accent);
+}
+
 .field-container:hover .gameplan-logo {
     opacity: 0.8;
 }

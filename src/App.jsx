@@ -5,6 +5,7 @@ import { downloadStageImage } from './utils/downloadImage';
 import CricketField from './components/CricketField';
 import FieldActions from './components/FieldActions';
 import FieldToolbar from './components/FieldToolbar';
+import { GithubIcon } from './components/icons';
 import HelpModal from './components/HelpModal';
 import SharePopup from './components/SharePopup';
 import Sidebar from './components/Sidebar';
@@ -130,7 +131,18 @@ function App() {
                 />
                 <div className="gameplan-logo">
                     <span>GAMEPLAN</span>
-                    <span className="app-version">v{__APP_VERSION__}</span>
+                    <span className="app-version">
+                        <span>v{__APP_VERSION__}</span>
+                        <a
+                            className="github-badge"
+                            href="https://github.com/moo3/gameplan"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            title="View on GitHub"
+                        >
+                            <GithubIcon />
+                        </a>
+                    </span>
                 </div>
                 <SharePopup url={shareUrl} onClose={closeShare} />
             </div>
