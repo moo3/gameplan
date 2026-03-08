@@ -1,9 +1,9 @@
 import { useCallback, useMemo, useState } from 'react';
 
-import { fieldPositions, initialFielderPositions } from '../data/fieldData';
+import { fieldPositionVectors, initialFielderPositions } from '../data/fieldData';
 import { flipCoords, getPositionLabel } from '../utils/fieldUtils';
 
-const positionCoordinates = fieldPositions.map((p) => p.vector);
+const positionCoordinates = fieldPositionVectors;
 
 const FIELD_W = 800;
 const FIELD_HEIGHT = 800;

@@ -1,4 +1,4 @@
-import { fieldPositions } from '../data/fieldData';
+import { fieldPositionNames } from '../data/fieldData';
 
 /** Squared distance between two 2D points [x,y] */
 export function calculateSquaredDistance(a, b) {
@@ -106,7 +106,7 @@ export function flipCoords(coords) {
 /** Get position label for an absolute position [normX, normY] */
 export function getPositionLabel(normX, normY, posCoords) {
     const idx = nearestNeighbor([normX, normY], posCoords);
-    return fieldPositions[idx].name;
+    return fieldPositionNames[idx];
 }
 
 /** Find the index of the nearest point in `bank` to `query` */
