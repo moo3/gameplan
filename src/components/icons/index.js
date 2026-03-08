@@ -11,6 +11,7 @@ export * from './MenuIcon';
 export * from './MoonIcon';
 export * from './NameTagIcon';
 export * from './PositionIcon';
+export * from './PresetsIcon';
 export * from './ResetZoomIcon';
 export * from './ShareIcon';
 export * from './SunIcon';
