@@ -7,6 +7,7 @@ import FieldActions from './components/FieldActions';
 import FieldToolbar from './components/FieldToolbar';
 import GameplanLogo from './components/GameplanLogo';
 import HelpModal from './components/HelpModal';
+import PresetsModal from './components/PresetsModal';
 import SharePopup from './components/SharePopup';
 import Sidebar from './components/Sidebar';
 import ZoomControls from './components/ZoomControls';
@@ -23,6 +24,7 @@ const FIELD_HEIGHT = 800;
 function App() {
     const stageRef = useRef(null);
     const [isHelpOpen, setIsHelpOpen] = useState(false);
+    const [isPresetsOpen, setIsPresetsOpen] = useState(false);
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [initialFieldState] = useState(() => parseFieldFromPath());
 
@@ -55,6 +57,7 @@ function App() {
 
     const {
         focusedPlayerIndex,
+        handleApplyPreset,
         handleLeftHandedToggle,
         handlePlayerDrag,
         handlePlayerNameChange,
@@ -135,6 +138,7 @@ function App() {
                     showPositions={showPositions}
                     setShowNames={setShowNames}
                     isLeftHanded={isLeftHanded}
+                    onOpenPresets={() => setIsPresetsOpen(true)}
                     showNames={showNames}
                 />
                 <GameplanLogo />
@@ -149,6 +153,7 @@ function App() {
                 isOpen={sidebarOpen}
             />
             <HelpModal onClose={() => setIsHelpOpen(false)} isOpen={isHelpOpen} />
+            <PresetsModal onClose={() => setIsPresetsOpen(false)} isOpen={isPresetsOpen} onApplyPreset={handleApplyPreset} />
         </div>
     );
 }

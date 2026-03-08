@@ -5,12 +5,13 @@ import React from 'react';
  * Positioned at top-right of the field container.
  */
 // --- SVG Icons ---
-import { BatterIcon, BoundaryIcon, CatchIcon, NameTagIcon, PositionIcon } from './icons';
+import { BatterIcon, BoundaryIcon, CatchIcon, NameTagIcon, PositionIcon, PresetsIcon } from './icons';
 
 // --- Component ---
 
 const FieldToolbar = ({
     isLeftHanded,
+    onOpenPresets,
     setIsLeftHanded,
     setShowBoundaryCoverage,
     setShowCatchCoverage,
@@ -56,6 +57,13 @@ const FieldToolbar = ({
             key: 'catch',
             label: 'Catch Coverage',
             toggle: () => setShowCatchCoverage(!showCatchCoverage),
+        },
+        {
+            active: false,
+            icon: <PresetsIcon />,
+            key: 'presets',
+            label: 'Field Presets',
+            toggle: onOpenPresets,
         },
     ];
 
