@@ -1,4 +1,4 @@
-import { fieldPositionNames } from '../data/fieldData';
+import { fieldPositionNames, fieldPositions } from '../data/fieldData';
 
 /** Squared distance between two 2D points [x,y] */
 export function calculateSquaredDistance(a, b) {
@@ -107,6 +107,17 @@ export function flipCoords(coords) {
 export function getPositionLabel(normX, normY, posCoords) {
     const idx = nearestNeighbor([normX, normY], posCoords);
     return fieldPositionNames[idx];
+}
+
+/** Helper to find a position coordinate by key  */
+export function getVectorForPositionName(name) {
+    const key = name.toLowerCase(); 
+    
+    // Check if it's a direct key (since we now use keys in presets)
+    if (fieldPositions[key]) return fieldPositions[key].vector;
+    
+    console.warn(`Position not found exactly: ${name}`);
+    return [0.5, 0.5]; 
 }
 
 /** Find the index of the nearest point in `bank` to `query` */

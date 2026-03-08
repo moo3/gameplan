@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 
 import { fieldPositionVectors, initialFielderPositions } from '../data/fieldData';
-import { flipCoords, getPositionLabel } from '../utils/fieldUtils';
+import { flipCoords, getPositionLabel, getVectorForPositionName } from '../utils/fieldUtils';
 
 const positionCoordinates = fieldPositionVectors;
 
@@ -108,10 +108,58 @@ export function usePlayers(initialFieldState) {
         }
     }, []);
 
+    const handleApplyPreset = useCallback(
+        (presetPlayers) => {
+            setPlayers((prev) => {
+                const next = [...prev];
+                let presetIdx = 0;
+                for (let i = 2; i < next.length; i++) {
+                    if (presetIdx >= presetPlayers.length) break;
+
+                    const pData = presetPlayers[presetIdx];
+                    let nameStr = pData;
+                    let explicitX, explicitY;
+
+                    if (Array.isArray(pData)) {
+                        nameStr = pData[0];
+                        explicitX = pData[1];
+                        explicitY = pData[2];
+                    }
+
+                    let normX, normY;
+                    if (explicitX !== undefined && explicitY !== undefined) {
+                        // if they are > 1, assume pixels, else normalized
+                        normX = explicitX > 1 ? explicitX / FIELD_W : explicitX;
+                        normY = explicitY > 1 ? explicitY / FIELD_HEIGHT : explicitY;
+                    } else {
+                        const vector = getVectorForPositionName(nameStr);
+                        // if isLeftHanded is true, we need to flip the vector.
+                        normX = isLeftHanded ? 0.98 - vector[0] : vector[0];
+                        normY = vector[1];
+                    }
+
+                    const newX = normX * FIELD_W;
+                    const newY = normY * FIELD_HEIGHT;
+
+                    next[i] = {
+                        ...next[i],
+                        posLabel: getPositionLabel(normX, normY, posCoords),
+                        x: newX,
+                        y: newY,
+                    };
+                    presetIdx++;
+                }
+                return next;
+            });
+        },
+        [isLeftHanded, posCoords],
+    );
+
     return {
         batterDisplayName,
         bowlerDisplayName,
         focusedPlayerIndex,
+        handleApplyPreset,
         handleLeftHandedToggle,
         handlePlayerDrag,
         handlePlayerNameChange,
