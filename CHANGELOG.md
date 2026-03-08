@@ -1,3 +1,11 @@
+# [1.2.0](https://github.com/moo3/gameplan/compare/v1.1.3...v1.2.0) (2026-03-08)
+
+
+### Features
+
+* redesign help modal with cleaner two-column layout ([483e95e](https://github.com/moo3/gameplan/commit/483e95e8c344927d53830462885d8e6ecf8fda0d))
+* show help automatically on first visit and use GameplanLogo ([a415ea1](https://github.com/moo3/gameplan/commit/a415ea1f5dff723d1769edd26b00d6d8142f132a))
+
 ## [1.1.3](https://github.com/moo3/gameplan/compare/v1.1.2...v1.1.3) (2026-03-07)
 
 
