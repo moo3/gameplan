@@ -834,3 +834,35 @@ body {
     border-radius: 6px;
     color: var(--accent);
 }
+
+.help-intro-list {
+    list-style-type: disc;
+    padding-left: 24px;
+    color: var(--text-secondary);
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.help-intro-list li {
+    margin-bottom: 8px;
+}
+
+.help-intro-list li:last-child {
+    margin-bottom: 0;
+}
+
+.help-two-column {
+    display: flex;
+    gap: 24px;
+}
+
+.help-two-column .help-section {
+    flex: 1;
+}
+
+@media (max-width: 768px) {
+    .help-two-column {
+        flex-direction: column;
+        gap: 28px;
+    }
+}
