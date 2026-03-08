@@ -1,11 +1,11 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { parseFieldFromPath } from './utils/fieldCodec';
 import { downloadStageImage } from './utils/downloadImage';
 import CricketField from './components/CricketField';
 import FieldActions from './components/FieldActions';
 import FieldToolbar from './components/FieldToolbar';
-import { GithubIcon } from './components/icons';
+import GameplanLogo from './components/GameplanLogo';
 import HelpModal from './components/HelpModal';
 import SharePopup from './components/SharePopup';
 import Sidebar from './components/Sidebar';
@@ -25,6 +25,14 @@ function App() {
     const [isHelpOpen, setIsHelpOpen] = useState(false);
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [initialFieldState] = useState(() => parseFieldFromPath());
+
+    useEffect(() => {
+        const hasVisited = localStorage.getItem('hasVisitedBefore');
+        if (!hasVisited) {
+            setIsHelpOpen(true);
+            localStorage.setItem('hasVisitedBefore', 'true');
+        }
+    }, []);
 
     // When loading from URL: use decoded flags + hide names unless custom names exist
     // When visiting directly: show names and positions by default
@@ -129,21 +137,7 @@ function App() {
                     isLeftHanded={isLeftHanded}
                     showNames={showNames}
                 />
-                <div className="gameplan-logo">
-                    <span>GAMEPLAN</span>
-                    <span className="app-version">
-                        <span>v{__APP_VERSION__}</span>
-                        <a
-                            className="github-badge"
-                            href="https://github.com/moo3/gameplan"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            title="View on GitHub"
-                        >
-                            <GithubIcon />
-                        </a>
-                    </span>
-                </div>
+                <GameplanLogo />
                 <SharePopup url={shareUrl} onClose={closeShare} />
             </div>
             <Sidebar
